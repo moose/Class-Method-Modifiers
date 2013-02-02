@@ -1,5 +1,8 @@
 Revision history for Class-Method-Modifiers
 
+2.03    2013-02-02
+        New build to fix missing files in inc/
+
 2.02    2013-02-01
         Dist improvements (Karen Etheridge)
 
