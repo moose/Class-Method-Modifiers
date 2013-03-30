@@ -1,5 +1,7 @@
 Revision history for Class-Method-Modifiers
 
+        Remove erroneous perl 5.8 requirement
+
 2.03    2013-02-02
         New build to fix missing files in inc/
 
