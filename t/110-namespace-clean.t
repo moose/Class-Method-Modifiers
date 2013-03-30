@@ -5,7 +5,7 @@ use Test::More;
 
 BEGIN {
     eval "require Class::MOP"
-        or plan skip_all => $!;
+        or plan skip_all => 'Test requires Class::MOP';
 }
 
 # code for this sub is taken directly from
