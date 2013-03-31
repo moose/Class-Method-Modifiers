@@ -7,12 +7,12 @@ use Module::Install::AutoLicense;
 
 # Define metadata
 name           'Class-Method-Modifiers';
-all_from       'lib/Class/Method/Modifiers.pm';
+perl_version   '5.006';
 readme_from    'lib/Class/Method/Modifiers.pm';
+all_from       'lib/Class/Method/Modifiers.pm';
 auto_license;
 githubmeta;
 
-perl_version '5.008';
 
 test_requires 'Test::Fatal';
 test_requires 'Test::More';
