@@ -1,5 +1,6 @@
 Revision history for Class-Method-Modifiers
 
+2.04    2013-03-30
         Remove erroneous perl 5.8 requirement
 
 2.03    2013-02-02
