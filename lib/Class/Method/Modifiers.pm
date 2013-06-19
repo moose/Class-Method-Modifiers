@@ -273,7 +273,7 @@ C<fresh>; see below.
 =head2 before method(s) => sub { ... }
 
 C<before> is called before the method it is modifying. Its return value is
-totally ignored. It receives the same C<@_> as the the method it is modifying
+totally ignored. It receives the same C<@_> as the method it is modifying
 would have received. You can modify the C<@_> the original method will receive
 by changing C<$_[0]> and friends (or by changing anything inside a reference).
 This is a feature!
@@ -281,7 +281,7 @@ This is a feature!
 =head2 after method(s) => sub { ... }
 
 C<after> is called after the method it is modifying. Its return value is
-totally ignored. It receives the same C<@_> as the the method it is modifying
+totally ignored. It receives the same C<@_> as the method it is modifying
 received, mostly. The original method can modify C<@_> (such as by changing
 C<$_[0]> or references) and C<after> will see the modified version. If you
 don't like this behavior, specify both a C<before> and C<after>, and copy the
