@@ -76,6 +76,9 @@ sub install_modifier {
         if ($type eq 'around') {
             my $method = $cache->{wrapped};
             my $attrs = _sub_attrs($code);
+            # a bare "sub :lvalue {...}" will be parsed as a label and an
+            # indirect method call. force it to be treated as an expression
+            # using +
             $cache->{wrapped} = eval "package $into; +sub $attrs { \$code->(\$method, \@_); };";
         }
 
