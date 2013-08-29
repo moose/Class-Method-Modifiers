@@ -74,8 +74,8 @@ sub install_modifier {
         # the Moose equivalent. :)
         if ($type eq 'around') {
             my $method = $cache->{wrapped};
-            my $lvalue = _is_lvalue($code) ? ':lvalue' : '';
-            $cache->{wrapped} = eval "package $into; +sub $lvalue { \$code->(\$method, \@_); };";
+            my $attrs = _sub_attrs($code);
+            $cache->{wrapped} = eval "package $into; +sub $attrs { \$code->(\$method, \@_); };";
         }
 
         # install our new method which dispatches the modifiers, but only
@@ -90,10 +90,10 @@ sub install_modifier {
             # to take a reference to it. better a deref than a hash lookup
             my $wrapped = \$cache->{"wrapped"};
 
-            my $lvalue = _is_lvalue($cache->{wrapped}) ? ':lvalue' : '';
+            my $attrs = _sub_attrs($cache->{wrapped});
 
             my $generated = "package $into;\n";
-            $generated .= "sub $name $lvalue {";
+            $generated .= "sub $name $attrs {";
 
             # before is easy, it doesn't affect the return value(s)
             if (@$before) {
@@ -191,11 +191,11 @@ sub _fresh {
     }
 }
 
-sub _is_lvalue {
+sub _sub_attrs {
     my ($coderef) = @_;
     require B;
-    my $cv = B::svref_2object($coderef);
-    return $cv->CvFLAGS & 2;
+    my $flags = B::svref_2object($coderef)->CvFLAGS;
+    return ($flags & B::CVf_LVALUE() ? ':lvalue' : '');
 }
 
 sub _is_in_package {
