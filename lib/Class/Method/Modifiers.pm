@@ -42,7 +42,7 @@ sub install_modifier {
         };
 
         # this must be the first modifier we're installing
-        if (!exists($MODIFIER_CACHE{$into}{$name}{"orig"})) {
+        if (!exists($cache->{"orig"})) {
             no strict 'refs';
 
             # grab the original method (or undef if the method is inherited)
@@ -182,9 +182,8 @@ sub _fresh {
             *{"$into\::$name"} = $code;
         }
         else {
-            my $body = 'my $self = shift; $self->$code(@_)';
             no warnings 'closure'; # for 5.8.x
-            eval "package $into; sub $name { $body }";
+            eval "package $into; sub $name { \$code->(\@_) }";
         }
     }
 }
