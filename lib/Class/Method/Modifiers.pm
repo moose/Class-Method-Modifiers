@@ -107,12 +107,12 @@ sub install_modifier {
 
             if (@$after) {
                 $generated .= '
-                    my @ret;
+                    my $ret;
                     if (wantarray) {
-                        @ret = $$wrapped->(@_);
+                        $ret = [$$wrapped->(@_)];
                     }
                     elsif (defined wantarray) {
-                        $ret[0] = $$wrapped->(@_);
+                        $ret = \($$wrapped->(@_));
                     }
                     else {
                         $$wrapped->(@_);
@@ -122,7 +122,7 @@ sub install_modifier {
                         $method->(@_);
                     }
 
-                    wantarray ? @ret : $ret[0];
+                    wantarray ? @$ret : $$ret;
                 ';
             }
             else {

@@ -26,10 +26,32 @@ use Test::More;
   };
 }
 
-Around->lvalue_method = 5;
-is(Around->lvalue_method, 5);
+Around->lvalue_method = 1;
+is(Around->lvalue_method, 1, 'around on an lvalue attribute is maintained');
 
-Around->other_method = 5;
-is(Around->other_method, 5);
+Around->other_method = 2;
+is(Around->other_method, 2, 'around adding an lvalue attribute works');
+
+{
+  package Before;
+  use Class::Method::Modifiers;
+  our @ISA = qw(WithLvalue);
+
+  before lvalue_method => sub {};
+}
+
+Before->lvalue_method = 3;
+is(Before->lvalue_method, 3, 'before maintains lvalue attribute');
+
+{
+  package After;
+  use Class::Method::Modifiers;
+  our @ISA = qw(WithLvalue);
+
+  after lvalue_method => sub {};
+}
+
+After->lvalue_method = 4;
+is(After->lvalue_method, 4, 'after maintains lvalue attribute');
 
 done_testing;
