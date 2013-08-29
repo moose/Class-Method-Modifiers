@@ -8,6 +8,9 @@ use Test::More;
   sub lvalue_method :lvalue { $f }
 
   sub other_method { 1 }
+
+  my @array;
+  sub array_lvalue :lvalue { @array }
 }
 
 {
@@ -24,6 +27,10 @@ use Test::More;
   around other_method => sub :lvalue {
     $d;
   };
+
+  around array_lvalue => sub :lvalue {
+    $_[0]->(@_[1..$#_]);
+  };
 }
 
 Around->lvalue_method = 1;
@@ -31,6 +38,9 @@ is(Around->lvalue_method, 1, 'around on an lvalue attribute is maintained');
 
 Around->other_method = 2;
 is(Around->other_method, 2, 'around adding an lvalue attribute works');
+
+(Around->array_lvalue) = (1,2);
+is_deeply([Around->array_lvalue], [1,2], 'around on array lvalue attribute works');
 
 {
   package Before;
@@ -49,9 +59,17 @@ is(Before->lvalue_method, 3, 'before maintains lvalue attribute');
   our @ISA = qw(WithLvalue);
 
   after lvalue_method => sub {};
+
+  after array_lvalue => sub {};
 }
 
 After->lvalue_method = 4;
 is(After->lvalue_method, 4, 'after maintains lvalue attribute');
+
+{
+  local $TODO = "can't apply after to array lvalue method";
+  (After->array_lvalue) = (3,4);
+  is_deeply([After->array_lvalue], [3,4], 'after array lvalue attribute works');
+}
 
 done_testing;
