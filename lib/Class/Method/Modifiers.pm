@@ -13,6 +13,10 @@ our %EXPORT_TAGS = (
     all   => \@EXPORT_OK,
 );
 
+BEGIN {
+  *_HAS_READONLY = $] >= 5.008 ? sub(){1} : sub(){0};
+}
+
 our %MODIFIER_CACHE;
 
 # for backward compatibility
@@ -113,6 +117,7 @@ sub install_modifier {
                     my $ret;
                     if (wantarray) {
                         $ret = [$$wrapped->(@_)];
+                        '.(_HAS_READONLY ? 'Internals::SvREADONLY(@$ret, 1);' : '').'
                     }
                     elsif (defined wantarray) {
                         $ret = \($$wrapped->(@_));

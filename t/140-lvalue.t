@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Fatal;
 
 {
   package WithLvalue;
@@ -40,7 +41,7 @@ Around->other_method = 2;
 is(Around->other_method, 2, 'around adding an lvalue attribute works');
 
 (Around->array_lvalue) = (1,2);
-is_deeply([Around->array_lvalue], [1,2], 'around on array lvalue attribute works');
+is_deeply([WithLvalue->array_lvalue], [1,2], 'around on array lvalue attribute works');
 
 {
   package Before;
@@ -68,8 +69,10 @@ is(After->lvalue_method, 4, 'after maintains lvalue attribute');
 
 {
   local $TODO = "can't apply after to array lvalue method";
-  (After->array_lvalue) = (3,4);
-  is_deeply([After->array_lvalue], [3,4], 'after array lvalue attribute works');
+  is exception { (After->array_lvalue) = (3,4) }, undef,
+    'assigning to array lvalue attribute causes no errors';
+  is_deeply([After->array_lvalue], [3,4],
+    'after array lvalue attribute sets values');
 }
 
 done_testing;
