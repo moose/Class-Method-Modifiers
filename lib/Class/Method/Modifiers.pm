@@ -125,8 +125,8 @@ sub install_modifier {
                         $method->(@_);
                     }
 
-                    wantarray ? @$ret : $$ret;
-                ';
+                    wantarray ? @$ret : $ret ? $$ret : ();
+                '
             }
             else {
                 $generated .= '$$wrapped->(@_);';
