@@ -195,7 +195,8 @@ sub _fresh {
         }
         else {
             no warnings 'closure'; # for 5.8.x
-            eval "package $into; sub $name { \$code->(\@_) }";
+            my $attrs = _sub_attrs($code);
+            eval "package $into; sub $name $attrs { \$code->(\@_) }";
         }
     }
 }
@@ -402,6 +403,14 @@ by other code. C<Class::Method::Modifiers> provides a way of
 overriding/augmenting methods safely, and the parent class need not know about
 it.
 
+=head2 :lvalue METHODS
+
+When adding C<before> or C<after> modifiers, the wrapper method will be
+an lvalue method if the wrapped sub is, and assigning to the method
+will propagate to the wrapped method as expected.  For C<around>
+modifiers, it is the modifier sub that determines if the wrapper
+method is an lvalue method.
+
 =head1 CAVEATS
 
 It is erroneous to modify a method that doesn't exist in your class's
@@ -410,6 +419,11 @@ the modifier is defined.
 
 It doesn't yet play well with C<caller>. There are some todo tests for this.
 Don't get your hopes up though!
+
+Applying modifiers to array lvalue methods is not fully supported. Attempting
+to assign to an array lvalue method that has an C<after> modifier applied will
+result in an error.  Array lvalue methods are not well supported by perl in
+general, and should be avoided.
 
 =head1 VERSION
 
