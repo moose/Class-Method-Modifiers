@@ -1,7 +1,8 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 6;
+use Test::Warnings;
+use Test::More tests => 7;
 
 my @calls;
 
@@ -88,3 +89,4 @@ is_deeply([splice @calls], [
     'after after Parent::original',
     'after Child::original',
 ]);
+
