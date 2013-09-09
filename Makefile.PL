@@ -14,6 +14,7 @@ auto_license;
 githubmeta;
 
 
+test_requires 'Test::Warnings';
 test_requires 'Test::Fatal';
 test_requires 'Test::More';
 
