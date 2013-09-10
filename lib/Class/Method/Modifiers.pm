@@ -4,7 +4,6 @@ use warnings;
 
 our $VERSION = '2.04';
 
-use B ();
 use base 'Exporter';
 our @EXPORT = qw(before after around);
 our @EXPORT_OK = (@EXPORT, qw(fresh install_modifier));
@@ -203,12 +202,14 @@ sub _fresh {
 
 sub _sub_attrs {
     my ($coderef) = @_;
-    my $flags = B::svref_2object($coderef)->CvFLAGS;
-    return ($flags & B::CVf_LVALUE ? ':lvalue' : '');
+    local *_sub = $coderef;
+    local $@;
+    (eval 'sub { _sub = 1 }') ? ':lvalue' : '';
 }
 
 sub _is_in_package {
     my ($coderef, $package) = @_;
+    require B;
     my $cv = B::svref_2object($coderef);
     return $cv->GV->STASH->NAME eq $package;
 }
