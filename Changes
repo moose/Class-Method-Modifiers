@@ -1,6 +1,8 @@
-Revision history for Class-Method-Modifiers
+Revision history for {{ $dist->name }}
 
-        Support for handling lvalue methods (Graham Knop)
+{{ $NEXT }}
+        - Support for handling lvalue methods (Graham Knop)
+        - convert to building with Dist::Zilla
 
 2.04    2013-03-30
         Remove erroneous perl 5.8 requirement
