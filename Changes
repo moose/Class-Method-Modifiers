@@ -1,6 +1,8 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+
+2.05      2013-09-11 03:50:28Z (Karen Etheridge)
         - Support for handling lvalue methods (Graham Knop)
         - convert to building with Dist::Zilla
 
