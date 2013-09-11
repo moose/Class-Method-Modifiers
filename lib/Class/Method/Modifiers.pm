@@ -251,6 +251,8 @@ Class::Method::Modifiers - provides Moose-like method modifiers
 
 =head1 DESCRIPTION
 
+=for stopwords CLOS
+
 Method modifiers are a convenient feature from the CLOS (Common Lisp Object
 System) world.
 
@@ -273,7 +275,8 @@ those methods to flesh out the specifics.
 
 Parent classes need not know about C<Class::Method::Modifiers>. This means you
 should be able to modify methods in I<any> subclass. See
-L<Term::VT102::ZeroBased> for an example of subclassing with CMM.
+L<Term::VT102::ZeroBased> for an example of subclassing with
+C<ClasS::Method::Modifiers>.
 
 In short, C<Class::Method::Modifiers> solves the problem of making sure you
 call C<< $self->SUPER::foo(@_) >>, and provides a cleaner interface for it.
@@ -416,7 +419,7 @@ It is erroneous to modify a method that doesn't exist in your class's
 inheritance hierarchy. If this occurs, an exception will be thrown when
 the modifier is defined.
 
-It doesn't yet play well with C<caller>. There are some todo tests for this.
+It doesn't yet play well with C<caller>. There are some C<TODO> tests for this.
 Don't get your hopes up though!
 
 Applying modifiers to array lvalue methods is not fully supported. Attempting
@@ -425,6 +428,8 @@ result in an error.  Array lvalue methods are not well supported by perl in
 general, and should be avoided.
 
 =head1 VERSION
+
+=for stopwords reimplementation
 
 This module was bumped to 1.00 following a complete reimplementation, to
 indicate breaking backwards compatibility. The "guard" modifier was removed,
@@ -447,6 +452,8 @@ CLOS
 Shawn M Moore, C<sartak@gmail.com>
 
 =head1 ACKNOWLEDGEMENTS
+
+=for stopwords Stevan
 
 Thanks to Stevan Little for L<Moose>, I would never have known about
 method modifiers otherwise.
