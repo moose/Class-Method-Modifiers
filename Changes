@@ -1,5 +1,7 @@
 Revision history for Class-Method-Modifiers
 
+        Support for handling lvalue methods (Graham Knop)
+
 2.04    2013-03-30
         Remove erroneous perl 5.8 requirement
 
