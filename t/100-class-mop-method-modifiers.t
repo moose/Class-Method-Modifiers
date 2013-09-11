@@ -1,4 +1,3 @@
-#!/usr/bin/env perl
 
 # taken from Class::MOP's test suite, cut down to the interesting bits I haven't
 # necessarily tested yet
