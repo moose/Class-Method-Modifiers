@@ -12,6 +12,10 @@ our %EXPORT_TAGS = (
     all   => \@EXPORT_OK,
 );
 
+BEGIN {
+  *_HAS_READONLY = $] >= 5.008 ? sub(){1} : sub(){0};
+}
+
 our %MODIFIER_CACHE;
 
 # for backward compatibility
@@ -42,7 +46,7 @@ sub install_modifier {
         };
 
         # this must be the first modifier we're installing
-        if (!exists($MODIFIER_CACHE{$into}{$name}{"orig"})) {
+        if (!exists($cache->{"orig"})) {
             no strict 'refs';
 
             # grab the original method (or undef if the method is inherited)
@@ -74,7 +78,11 @@ sub install_modifier {
         # the Moose equivalent. :)
         if ($type eq 'around') {
             my $method = $cache->{wrapped};
-            $cache->{wrapped} = eval "package $into; sub { \$code->(\$method, \@_); };";
+            my $attrs = _sub_attrs($code);
+            # a bare "sub :lvalue {...}" will be parsed as a label and an
+            # indirect method call. force it to be treated as an expression
+            # using +
+            $cache->{wrapped} = eval "package $into; +sub $attrs { \$code->(\$method, \@_); };";
         }
 
         # install our new method which dispatches the modifiers, but only
@@ -89,8 +97,10 @@ sub install_modifier {
             # to take a reference to it. better a deref than a hash lookup
             my $wrapped = \$cache->{"wrapped"};
 
+            my $attrs = _sub_attrs($cache->{wrapped});
+
             my $generated = "package $into;\n";
-            $generated .= "sub $name {";
+            $generated .= "sub $name $attrs {";
 
             # before is easy, it doesn't affect the return value(s)
             if (@$before) {
@@ -103,12 +113,13 @@ sub install_modifier {
 
             if (@$after) {
                 $generated .= '
-                    my @ret;
+                    my $ret;
                     if (wantarray) {
-                        @ret = $$wrapped->(@_);
+                        $ret = [$$wrapped->(@_)];
+                        '.(_HAS_READONLY ? 'Internals::SvREADONLY(@$ret, 1);' : '').'
                     }
                     elsif (defined wantarray) {
-                        $ret[0] = $$wrapped->(@_);
+                        $ret = \($$wrapped->(@_));
                     }
                     else {
                         $$wrapped->(@_);
@@ -118,8 +129,8 @@ sub install_modifier {
                         $method->(@_);
                     }
 
-                    return wantarray ? @ret : $ret[0];
-                ';
+                    wantarray ? @$ret : $ret ? $$ret : ();
+                '
             }
             else {
                 $generated .= '$$wrapped->(@_);';
@@ -182,11 +193,18 @@ sub _fresh {
             *{"$into\::$name"} = $code;
         }
         else {
-            my $body = 'my $self = shift; $self->$code(@_)';
             no warnings 'closure'; # for 5.8.x
-            eval "package $into; sub $name { $body }";
+            my $attrs = _sub_attrs($code);
+            eval "package $into; sub $name $attrs { \$code->(\@_) }";
         }
     }
+}
+
+sub _sub_attrs {
+    my ($coderef) = @_;
+    local *_sub = $coderef;
+    local $@;
+    (eval 'sub { _sub = 1 }') ? ':lvalue' : '';
 }
 
 sub _is_in_package {
@@ -386,6 +404,14 @@ by other code. C<Class::Method::Modifiers> provides a way of
 overriding/augmenting methods safely, and the parent class need not know about
 it.
 
+=head2 :lvalue METHODS
+
+When adding C<before> or C<after> modifiers, the wrapper method will be
+an lvalue method if the wrapped sub is, and assigning to the method
+will propagate to the wrapped method as expected.  For C<around>
+modifiers, it is the modifier sub that determines if the wrapper
+method is an lvalue method.
+
 =head1 CAVEATS
 
 It is erroneous to modify a method that doesn't exist in your class's
@@ -394,6 +420,11 @@ the modifier is defined.
 
 It doesn't yet play well with C<caller>. There are some todo tests for this.
 Don't get your hopes up though!
+
+Applying modifiers to array lvalue methods is not fully supported. Attempting
+to assign to an array lvalue method that has an C<after> modifier applied will
+result in an error.  Array lvalue methods are not well supported by perl in
+general, and should be avoided.
 
 =head1 VERSION
 
