@@ -1,6 +1,7 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+        - packaging the dist again with EUMM rather than MBT
 
 2.05      2013-09-11 03:50:28Z (Karen Etheridge)
         - Support for handling lvalue methods (Graham Knop)
