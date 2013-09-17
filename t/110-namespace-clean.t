@@ -4,8 +4,8 @@ use warnings;
 use Test::More;
 
 BEGIN {
-    eval "require Class::MOP"
-        or plan skip_all => 'Test requires Class::MOP';
+    eval "require Moose"
+        or plan skip_all => 'Test requires Moose';
 }
 
 # code for this sub is taken directly from
@@ -13,7 +13,7 @@ BEGIN {
 sub imports
 {
     my $ns = shift;
-    my $meta = Class::MOP::class_of($ns) || Class::MOP::Class->initialize($ns);
+    my $meta = Moose::Util::find_meta($ns) || Moose::Meta::Class->initialize($ns);
     my %methods = map { ($_ => 1) } $meta->get_method_list;
     my @symbols = keys %{ $meta->get_all_package_symbols('CODE') || {} };
     my @imports = grep { !$methods{$_} } @symbols;
