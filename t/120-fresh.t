@@ -1,7 +1,8 @@
 use strict;
 use warnings;
 
-use Test::More tests => 12;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::Fatal;
 
 use B 'svref_2object';
@@ -85,3 +86,5 @@ like(exception { install_modifier P3 => fresh => m6 => sub {} },
 like(exception { install_modifier P3 => fresh => '=:=' => sub {} },
      qr/^Invalid method name '=:='/,
      'install_modifier: exception when name invalid');
+
+done_testing;

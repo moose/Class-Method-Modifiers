@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More tests => 1;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 my $D = D->new();
 is($D->orig, "DBA", "C not called");
@@ -27,3 +28,4 @@ BEGIN
     around orig => sub { "D" . shift->() };
 }
 
+done_testing;

@@ -1,7 +1,7 @@
 use strict;
 use warnings;
-use Test::Warnings;
-use Test::More tests => 7;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 my @calls;
 
@@ -89,3 +89,4 @@ is_deeply([splice @calls], [
     'after Child::original',
 ]);
 
+done_testing;

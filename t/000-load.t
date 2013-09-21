@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More tests => 1;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 do {
     package Class;
@@ -20,3 +21,4 @@ do {
 
 pass("loaded correctly");
 
+done_testing;

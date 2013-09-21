@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More tests => 3;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 my $child = Child->new();
 my @words = split ' ', $child->orig("param");
@@ -38,3 +39,5 @@ BEGIN
             "after";
     };
 }
+
+done_testing;

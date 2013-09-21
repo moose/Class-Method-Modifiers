@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More tests => 3;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 do {
     package Fib;
@@ -26,3 +27,5 @@ do {
 };
 
 is_deeply([Fib->onacci], [1, 1, 2]);
+
+done_testing;

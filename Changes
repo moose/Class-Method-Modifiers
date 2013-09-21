@@ -1,6 +1,8 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+        - removed dependency on Test::Warnings in tests (now reserved for
+          author testing)
 
 2.06      2013-09-17 19:43:09Z (Karen Etheridge)
         - packaging the dist again with EUMM rather than MBT

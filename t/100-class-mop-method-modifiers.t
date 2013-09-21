@@ -5,7 +5,8 @@
 use strict;
 use warnings;
 
-use Test::More tests => 3;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 my @tracelog;
 
 package GreatGrandParent;
@@ -66,3 +67,5 @@ is_deeply(
     ],
     '... got the right tracelog from all our before/around/after methods');
 
+
+done_testing;

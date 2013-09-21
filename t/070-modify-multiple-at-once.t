@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More tests => 4;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 my @seen;
 
 package Parent;
@@ -34,3 +35,4 @@ is_deeply([splice @seen], [qw/grandbefore before orig-left/], "correct 'left' re
 $grand->right;
 is_deeply([splice @seen], [qw/grandbefore before orig-right/], "correct 'right' results");
 
+done_testing;

@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More tests => 1;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 my $storage = "Foo";
 
@@ -34,3 +35,5 @@ BEGIN
         return ["lc on an arrayref? ha ha ha"];
     };
 }
+
+done_testing;

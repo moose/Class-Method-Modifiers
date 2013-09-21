@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More tests => 3;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 my $orig;
 my $code = sub { die };
@@ -96,3 +97,4 @@ is_deeply(\%Class::Method::Modifiers::MODIFIER_CACHE, {
     },
 });
 
+done_testing;

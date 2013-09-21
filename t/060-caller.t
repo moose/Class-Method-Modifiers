@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More tests => 5;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 my ($parent_caller, $before_caller, $around_caller, $after_caller);
 
@@ -55,3 +56,5 @@ BEGIN
         $orig->();
     };
 }
+
+done_testing;

@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More tests => 1;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 my @seen;
 
 eval { ChildCMM->new->orig() };
@@ -18,3 +19,4 @@ BEGIN
     around 'orig' => sub { my $orig = shift; $orig->(); $orig->(); };
 }
 
+done_testing;

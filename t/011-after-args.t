@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More tests => 2;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 my $after_saw_orig_args = 0;
 
@@ -35,3 +36,5 @@ BEGIN
         return sub { die "somehow a closure was executed" };
     };
 }
+
+done_testing;

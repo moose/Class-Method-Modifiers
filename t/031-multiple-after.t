@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More tests => 1;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 my @seen;
 my @expected = ("orig", "after 1", "after 2");
@@ -34,3 +35,4 @@ BEGIN {
     };
 }
 
+done_testing;

@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More tests => 2;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 my @seen;
 
@@ -84,3 +85,5 @@ BEGIN
         push @seen, 'beforer';
     };
 }
+
+done_testing;

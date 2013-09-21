@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More tests => 2;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 my @calls;
 
@@ -48,3 +49,5 @@ TODO: {
         'after Child::foo',
     ]);
 }
+
+done_testing;

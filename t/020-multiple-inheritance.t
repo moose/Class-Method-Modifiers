@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use Test::More tests => 18;
+use Test::More;
+use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 # inheritance tree looks like:
 #
@@ -107,3 +108,4 @@ BEGIN
     }
 }
 
+done_testing;
