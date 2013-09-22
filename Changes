@@ -3,6 +3,9 @@ Revision history for {{ $dist->name }}
 {{ $NEXT }}
         - removed dependency on Test::Warnings in tests (now reserved for
           author testing)
+        - now packaged with a Build.PL (for Module::Build::Tiny), and a
+          Makefile.PL (for legacy 5.6 and 5.8 users; prints a warning on
+          invocation)
 
 2.06      2013-09-17 19:43:09Z (Karen Etheridge)
         - packaging the dist again with EUMM rather than MBT
