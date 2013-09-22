@@ -1,6 +1,8 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+
+2.07      2013-09-22 22:09:32Z (Karen Etheridge)
         - removed dependency on Test::Warnings in tests (now reserved for
           author testing)
         - now packaged with a Build.PL (for Module::Build::Tiny), and a
