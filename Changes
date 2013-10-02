@@ -1,6 +1,7 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+        - remove requirement on perl 5.8 in metadata
 
 2.07      2013-09-22 22:09:32Z (Karen Etheridge)
         - removed dependency on Test::Warnings in tests (now reserved for

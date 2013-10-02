@@ -2,7 +2,7 @@ package Class::Method::Modifiers;
 use strict;
 use warnings;
 
-use base 'Exporter';
+use Exporter 5.57 'import';
 our @EXPORT = qw(before after around);
 our @EXPORT_OK = (@EXPORT, qw(fresh install_modifier));
 our %EXPORT_TAGS = (
