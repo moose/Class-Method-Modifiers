@@ -2,7 +2,9 @@ package Class::Method::Modifiers;
 use strict;
 use warnings;
 
-use Exporter 5.57 'import';
+# work around https://rt.cpan.org/Ticket/Display.html?id=89173
+use base ('Exp'.'orter');
+
 our @EXPORT = qw(before after around);
 our @EXPORT_OK = (@EXPORT, qw(fresh install_modifier));
 our %EXPORT_TAGS = (
