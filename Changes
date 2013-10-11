@@ -1,6 +1,8 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+
+2.08      2013-10-11 00:30:32Z (Karen Etheridge)
         - remove requirement on perl 5.8 in metadata
         - repository migrated to the github moose organization
         - remove t/00-check-deps.t, which fails on old toolchains that do not
