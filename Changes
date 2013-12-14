@@ -1,6 +1,10 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+        - refresh configure_requires checking in generated Makefile.PL; new
+          CONTRIBUTING file; updated tests (compile test now only runs for
+          authors; check-deps test replaced by information-only report-prereqs
+          test)
 
 2.08      2013-10-11 00:30:32Z (Karen Etheridge)
         - remove requirement on perl 5.8 in metadata
