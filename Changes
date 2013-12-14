@@ -1,6 +1,8 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+
+2.09      2013-12-14 18:08:35Z
         - refresh configure_requires checking in generated Makefile.PL; new
           CONTRIBUTING file; updated tests (compile test now only runs for
           authors; check-deps test replaced by information-only report-prereqs

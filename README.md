@@ -56,14 +56,14 @@ those methods to flesh out the specifics.
 
 Parent classes need not know about `Class::Method::Modifiers`. This means you
 should be able to modify methods in _any_ subclass. See
-[Term::VT102::ZeroBased](http://search.cpan.org/perldoc?Term::VT102::ZeroBased) for an example of subclassing with
+[Term::VT102::ZeroBased](https://metacpan.org/pod/Term::VT102::ZeroBased) for an example of subclassing with
 `ClasS::Method::Modifiers`.
 
 In short, `Class::Method::Modifiers` solves the problem of making sure you
 call `$self->SUPER::foo(@_)`, and provides a cleaner interface for it.
 
 As of version 1.00, `Class::Method::Modifiers` is faster in some cases than
-[Moose](http://search.cpan.org/perldoc?Moose). See `benchmark/method_modifiers.pl` in the [Moose](http://search.cpan.org/perldoc?Moose) distribution.
+[Moose](https://metacpan.org/pod/Moose). See `benchmark/method_modifiers.pl` in the [Moose](https://metacpan.org/pod/Moose) distribution.
 
 `Class::Method::Modifiers` also provides an additional "modifier" type,
 `fresh`; see below.
@@ -148,7 +148,7 @@ in your subclass, or similar).
 
 Creating fresh methods with `install_modifier` (see below) provides a way
 to get similar safety benefits when adding local monkeypatches to existing
-classes; see [http://aaroncrane.co.uk/talks/monkey\_patching\_subclassing/](http://aaroncrane.co.uk/talks/monkey\_patching\_subclassing/).
+classes; see [http://aaroncrane.co.uk/talks/monkey_patching_subclassing/](http://aaroncrane.co.uk/talks/monkey_patching_subclassing/).
 
 For API compatibility reasons, this function is exported only when you ask
 for it specifically, or for `:all`.
@@ -165,16 +165,16 @@ function is exported only when you ask for it specifically, or for `:all`.
 
 All three normal modifiers; `before`, `after`, and `around`; are exported
 into your namespace by default. You may `use Class::Method::Modifiers ()` to
-avoid thrashing your namespace. I may steal more features from [Moose](http://search.cpan.org/perldoc?Moose), namely
-`super`, `override`, `inner`, `augment`, and whatever the [Moose](http://search.cpan.org/perldoc?Moose) folks
+avoid thrashing your namespace. I may steal more features from [Moose](https://metacpan.org/pod/Moose), namely
+`super`, `override`, `inner`, `augment`, and whatever the [Moose](https://metacpan.org/pod/Moose) folks
 come up with next.
 
 Note that the syntax and semantics for these modifiers is directly borrowed
-from [Moose](http://search.cpan.org/perldoc?Moose) (the implementations, however, are not).
+from [Moose](https://metacpan.org/pod/Moose) (the implementations, however, are not).
 
-[Class::Trigger](http://search.cpan.org/perldoc?Class::Trigger) shares a few similarities with `Class::Method::Modifiers`,
+[Class::Trigger](https://metacpan.org/pod/Class::Trigger) shares a few similarities with `Class::Method::Modifiers`,
 and they even have some overlap in purpose -- both can be used to implement
-highly pluggable applications. The difference is that [Class::Trigger](http://search.cpan.org/perldoc?Class::Trigger)
+highly pluggable applications. The difference is that [Class::Trigger](https://metacpan.org/pod/Class::Trigger)
 provides a mechanism for easily letting parent classes to invoke hooks defined
 by other code. `Class::Method::Modifiers` provides a way of
 overriding/augmenting methods safely, and the parent class need not know about
@@ -216,8 +216,8 @@ become more correct. And, of course, faster. :)
 
 # SEE ALSO
 
-[Class::Method::Modifiers::Fast](http://search.cpan.org/perldoc?Class::Method::Modifiers::Fast)
-[Moose](http://search.cpan.org/perldoc?Moose), [Class::Trigger](http://search.cpan.org/perldoc?Class::Trigger), [Class::MOP::Method::Wrapped](http://search.cpan.org/perldoc?Class::MOP::Method::Wrapped), [MRO::Compat](http://search.cpan.org/perldoc?MRO::Compat),
+[Class::Method::Modifiers::Fast](https://metacpan.org/pod/Class::Method::Modifiers::Fast)
+[Moose](https://metacpan.org/pod/Moose), [Class::Trigger](https://metacpan.org/pod/Class::Trigger), [Class::MOP::Method::Wrapped](https://metacpan.org/pod/Class::MOP::Method::Wrapped), [MRO::Compat](https://metacpan.org/pod/MRO::Compat),
 CLOS
 
 # AUTHOR
@@ -226,7 +226,7 @@ Shawn M Moore, `sartak@gmail.com`
 
 # ACKNOWLEDGEMENTS
 
-Thanks to Stevan Little for [Moose](http://search.cpan.org/perldoc?Moose), I would never have known about
+Thanks to Stevan Little for [Moose](https://metacpan.org/pod/Moose), I would never have known about
 method modifiers otherwise.
 
 Thanks to Matt Trout and Stevan Little for their advice.
