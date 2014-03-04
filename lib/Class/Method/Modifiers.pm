@@ -1,6 +1,8 @@
-package Class::Method::Modifiers;
 use strict;
 use warnings;
+package Class::Method::Modifiers;
+# ABSTRACT: Provides Moose-like method modifiers
+# vim: set ts=8 sw=4 tw=78 et :
 
 # work around https://rt.cpan.org/Ticket/Display.html?id=89173
 use base ('Exp'.'orter');
