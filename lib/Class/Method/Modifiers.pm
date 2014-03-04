@@ -429,7 +429,7 @@ to assign to an array lvalue method that has an C<after> modifier applied will
 result in an error.  Array lvalue methods are not well supported by perl in
 general, and should be avoided.
 
-=head1 VERSION
+=head1 MAJOR VERSION CHANGES
 
 =for stopwords reimplementation
 
