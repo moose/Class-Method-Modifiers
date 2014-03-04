@@ -8,23 +8,23 @@ Revision history for {{ $dist->name }}
           authors; check-deps test replaced by information-only report-prereqs
           test)
 
-2.08      2013-10-11 00:30:32Z (Karen Etheridge)
+2.08      2013-10-11 00:30:32Z
         - remove requirement on perl 5.8 in metadata
         - repository migrated to the github moose organization
         - remove t/00-check-deps.t, which fails on old toolchains that do not
           understand configure_requires
 
-2.07      2013-09-22 22:09:32Z (Karen Etheridge)
+2.07      2013-09-22 22:09:32Z
         - removed dependency on Test::Warnings in tests (now reserved for
           author testing)
         - now packaged with a Build.PL (for Module::Build::Tiny), and a
           Makefile.PL (for legacy 5.6 and 5.8 users; prints a warning on
           invocation)
 
-2.06      2013-09-17 19:43:09Z (Karen Etheridge)
+2.06      2013-09-17 19:43:09Z
         - packaging the dist again with EUMM rather than MBT
 
-2.05      2013-09-11 03:50:28Z (Karen Etheridge)
+2.05      2013-09-11 03:50:28Z
         - Support for handling lvalue methods (Graham Knop)
         - convert to building with Dist::Zilla
 
