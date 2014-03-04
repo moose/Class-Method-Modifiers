@@ -2,6 +2,10 @@
 
 Class::Method::Modifiers - provides Moose-like method modifiers
 
+# VERSION
+
+version 2.10
+
 # SYNOPSIS
 
     package Child;
@@ -29,8 +33,6 @@ Class::Method::Modifiers - provides Moose-like method modifiers
     fresh 'not_in_hierarchy' => sub {
         warn "freshly added method\n";
     };
-
-
 
 # DESCRIPTION
 
@@ -102,12 +104,14 @@ You can use `around` to:
             my $self = shift;
             $orig->($self, reverse @_);
         };
+
 - Munge the return value of `$orig`
 
         around 'method' => sub {
             my $orig = shift;
             ucfirst $orig->(@_);
         };
+
 - Avoid calling `$orig` -- conditionally
 
         around 'method' => sub {
@@ -148,7 +152,7 @@ in your subclass, or similar).
 
 Creating fresh methods with `install_modifier` (see below) provides a way
 to get similar safety benefits when adding local monkeypatches to existing
-classes; see [http://aaroncrane.co.uk/talks/monkey_patching_subclassing/](http://aaroncrane.co.uk/talks/monkey_patching_subclassing/).
+classes; see [http://aaroncrane.co.uk/talks/monkey\_patching\_subclassing/](http://aaroncrane.co.uk/talks/monkey_patching_subclassing/).
 
 For API compatibility reasons, this function is exported only when you ask
 for it specifically, or for `:all`.
@@ -202,7 +206,7 @@ to assign to an array lvalue method that has an `after` modifier applied will
 result in an error.  Array lvalue methods are not well supported by perl in
 general, and should be avoided.
 
-# VERSION
+# MAJOR VERSION CHANGES
 
 This module was bumped to 1.00 following a complete reimplementation, to
 indicate breaking backwards compatibility. The "guard" modifier was removed,
