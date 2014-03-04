@@ -1,6 +1,8 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+        - installation switched to using only ExtUtils::MakeMaker, to allow
+          for use on perl 5.6
 
 2.09      2013-12-14 18:08:35Z
         - refresh configure_requires checking in generated Makefile.PL; new
