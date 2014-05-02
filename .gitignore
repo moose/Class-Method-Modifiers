@@ -1,3 +1,6 @@
-/.build
-!.gitignore
-/Class-Method-Modifiers-*
+/.ackrc
+/.build/
+!/.gitignore
+/.latest
+/Class-Method-Modifiers-*/
+/Class-Method-Modifiers-*.tar.gz
