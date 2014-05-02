@@ -4,10 +4,7 @@ use warnings;
 use Test::More;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
-BEGIN {
-    eval "require Moose"
-        or plan skip_all => 'Test requires Moose';
-}
+use Test::Requires 'Moose';
 
 # code for this sub is taken directly from
 # Test::CleanNamespaces::build_namespaces_clean
