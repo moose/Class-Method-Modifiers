@@ -5,7 +5,7 @@ package Class::Method::Modifiers;
 # vim: set ts=8 sw=4 tw=78 et :
 
 # work around https://rt.cpan.org/Ticket/Display.html?id=89173
-use base ('Exp'.'orter');
+use base 'Exporter';
 
 our @EXPORT = qw(before after around);
 our @EXPORT_OK = (@EXPORT, qw(fresh install_modifier));
