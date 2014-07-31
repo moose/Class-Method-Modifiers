@@ -354,6 +354,8 @@ You can use C<around> to:
 
 =head2 fresh method(s) => sub { ... };
 
+(Available since version 2.00)
+
 Unlike the other modifiers, this does not modify an existing method.
 Ordinarily, C<fresh> merely installs the coderef as a method in the
 appropriate class; but if the class hierarchy already contains a method of
