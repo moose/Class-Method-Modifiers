@@ -1,6 +1,8 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+
+2.11      2014-08-16 05:21:30Z
         - add documentation for modifying multiple methods at once (mannih,
           github #2)
 
