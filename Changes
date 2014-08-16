@@ -1,6 +1,8 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+        - add documentation for modifying multiple methods at once (mannih,
+          github #2)
 
 2.10      2014-03-04 19:04:00Z
         - installation switched to using only ExtUtils::MakeMaker, to allow
