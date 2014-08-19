@@ -3,29 +3,29 @@ use warnings;
 use Test::More;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
-my $D = D->new();
-is($D->orig, "DBA", "C not called");
+my $Fourth = Fourth->new();
+is($Fourth->orig, "FourthSecondFirst", "Third not called");
 
 BEGIN
 {
-    package A;
+    package First;
     sub new { bless {}, shift }
-    sub orig { "A" }
+    sub orig { "First" }
 
-    package B;
+    package Second;
     use Class::Method::Modifiers;
-    our @ISA = ('A');
-    around orig => sub { "B" . shift->() };
+    our @ISA = ('First');
+    around orig => sub { "Second" . shift->() };
 
-    package C;
+    package Third;
     use Class::Method::Modifiers;
-    our @ISA = ('A');
-    around orig => sub { "C" . shift->() };
+    our @ISA = ('First');
+    around orig => sub { "Third" . shift->() };
 
-    package D;
+    package Fourth;
     use Class::Method::Modifiers;
-    our @ISA = ('B', 'C');
-    around orig => sub { "D" . shift->() };
+    our @ISA = ('Second', 'Third');
+    around orig => sub { "Fourth" . shift->() };
 }
 
 done_testing;
