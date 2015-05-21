@@ -404,7 +404,7 @@ function is exported only when you ask for it specifically, or for C<:all>.
 
 All three normal modifiers; C<before>, C<after>, and C<around>; are exported
 into your namespace by default. You may C<use Class::Method::Modifiers ()> to
-avoid thrashing your namespace. I may steal more features from L<Moose>, namely
+avoid modifying your namespace. I may steal more features from L<Moose>, namely
 C<super>, C<override>, C<inner>, C<augment>, and whatever the L<Moose> folks
 come up with next.
 
