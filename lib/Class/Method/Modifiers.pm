@@ -364,7 +364,7 @@ the same name, an exception is thrown.  The idea of this "modifier" is to
 increase safety when subclassing.  Suppose you're writing a subclass of a
 class Some::Base, and adding a new method:
 
-    package My::SubclassOf::C;
+    package My::Subclass;
     use base 'Some::Base';
 
     sub foo { ... }
@@ -373,7 +373,7 @@ If a later version of Some::Base also adds a new method named C<foo>, your
 method will shadow that method.  Alternatively, you can use C<fresh>
 to install the additional method into your subclass:
 
-    package My::SubclassOf::C;
+    package My::Subclass;
     use base 'Some::Base';
 
     use Class::Method::Modifiers 'fresh';
