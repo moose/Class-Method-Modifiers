@@ -281,7 +281,7 @@ those methods to flesh out the specifics.
 Parent classes need not know about C<Class::Method::Modifiers>. This means you
 should be able to modify methods in I<any> subclass. See
 L<Term::VT102::ZeroBased> for an example of subclassing with
-C<ClasS::Method::Modifiers>.
+C<Class::Method::Modifiers>.
 
 In short, C<Class::Method::Modifiers> solves the problem of making sure you
 call C<< $self->SUPER::foo(@_) >>, and provides a cleaner interface for it.
