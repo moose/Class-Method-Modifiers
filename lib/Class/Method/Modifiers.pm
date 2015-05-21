@@ -281,7 +281,7 @@ those methods to flesh out the specifics.
 Parent classes need not know about C<Class::Method::Modifiers>. This means you
 should be able to modify methods in I<any> subclass. See
 L<Term::VT102::ZeroBased> for an example of subclassing with
-C<ClasS::Method::Modifiers>.
+C<Class::Method::Modifiers>.
 
 In short, C<Class::Method::Modifiers> solves the problem of making sure you
 call C<< $self->SUPER::foo(@_) >>, and provides a cleaner interface for it.
@@ -364,7 +364,7 @@ the same name, an exception is thrown.  The idea of this "modifier" is to
 increase safety when subclassing.  Suppose you're writing a subclass of a
 class Some::Base, and adding a new method:
 
-    package My::SubclassOf::C;
+    package My::Subclass;
     use base 'Some::Base';
 
     sub foo { ... }
@@ -373,7 +373,7 @@ If a later version of Some::Base also adds a new method named C<foo>, your
 method will shadow that method.  Alternatively, you can use C<fresh>
 to install the additional method into your subclass:
 
-    package My::SubclassOf::C;
+    package My::Subclass;
     use base 'Some::Base';
 
     use Class::Method::Modifiers 'fresh';
@@ -404,7 +404,7 @@ function is exported only when you ask for it specifically, or for C<:all>.
 
 All three normal modifiers; C<before>, C<after>, and C<around>; are exported
 into your namespace by default. You may C<use Class::Method::Modifiers ()> to
-avoid thrashing your namespace. I may steal more features from L<Moose>, namely
+avoid modifying your namespace. I may steal more features from L<Moose>, namely
 C<super>, C<override>, C<inner>, C<augment>, and whatever the L<Moose> folks
 come up with next.
 
