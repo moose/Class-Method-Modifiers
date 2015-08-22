@@ -5,6 +5,8 @@ package Class::Method::Modifiers;
 # KEYWORDS: method wrap modification patch
 # vim: set ts=8 sw=4 tw=78 et :
 
+our $VERSION = '2.12';
+
 # work around https://rt.cpan.org/Ticket/Display.html?id=89173
 use base 'Exporter';
 
