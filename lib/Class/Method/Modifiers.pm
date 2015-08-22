@@ -457,9 +457,13 @@ become more correct. And, of course, faster. :)
 
 =head1 SEE ALSO
 
-L<Class::Method::Modifiers::Fast>
-L<Moose>, L<Class::Trigger>, L<Class::MOP::Method::Wrapped>, L<MRO::Compat>,
-CLOS
+=for :list
+* L<Class::Method::Modifiers::Fast>
+* L<Moose>
+* L<Class::Trigger>
+* L<Class::MOP::Method::Wrapped>
+* L<MRO::Compat>,
+* CLOS
 
 =head1 ACKNOWLEDGEMENTS
 
