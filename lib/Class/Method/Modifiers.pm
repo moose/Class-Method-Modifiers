@@ -463,7 +463,7 @@ become more correct. And, of course, faster. :)
 * L<Class::Trigger>
 * L<Class::MOP::Method::Wrapped>
 * L<MRO::Compat>,
-* CLOS
+* L<CLOS|https://en.wikipedia.org/wiki/Common_Lisp_Object_System>
 
 =head1 ACKNOWLEDGEMENTS
 
