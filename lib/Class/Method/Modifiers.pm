@@ -223,9 +223,7 @@ sub _is_in_package {
 
 __END__
 
-=head1 NAME
-
-Class::Method::Modifiers - provides Moose-like method modifiers
+=pod
 
 =head1 SYNOPSIS
 
@@ -463,10 +461,6 @@ L<Class::Method::Modifiers::Fast>
 L<Moose>, L<Class::Trigger>, L<Class::MOP::Method::Wrapped>, L<MRO::Compat>,
 CLOS
 
-=head1 AUTHOR
-
-Shawn M Moore, C<sartak@gmail.com>
-
 =head1 ACKNOWLEDGEMENTS
 
 =for stopwords Stevan
@@ -476,12 +470,4 @@ method modifiers otherwise.
 
 Thanks to Matt Trout and Stevan Little for their advice.
 
-=head1 COPYRIGHT AND LICENSE
-
-Copyright 2007-2009 Shawn M Moore.
-
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
-
 =cut
-
