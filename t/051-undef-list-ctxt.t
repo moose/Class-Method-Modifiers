@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More;
+use Test::More 0.88;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 my ($after_called, $orig_called) = (0, 0);
