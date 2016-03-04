@@ -7,7 +7,6 @@ package Class::Method::Modifiers;
 
 our $VERSION = '2.12';
 
-# work around https://rt.cpan.org/Ticket/Display.html?id=89173
 use base 'Exporter';
 
 our @EXPORT = qw(before after around);
