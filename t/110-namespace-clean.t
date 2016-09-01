@@ -4,7 +4,7 @@ use warnings;
 use Test::More 0.88;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
-use Test::Requires 'Moose';
+use Test::Needs 'Moose';
 
 # code for this sub is taken directly from
 # Test::CleanNamespaces::build_namespaces_clean
