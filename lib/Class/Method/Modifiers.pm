@@ -301,7 +301,7 @@ sub _overloaded_op_method {
 
         my $glob = _getglob "${class}::${symbol}";
         *$glob = \$method_name;
-	no warnings 'redefine';
+        no warnings 'redefine';
         *$glob = \&overload::nil || \&overload::_nil;
 
     }

@@ -9,15 +9,15 @@ subtest 'method name' => sub {
   @seen = ();
 
   my @expected = ("Child::++ before 2",
-		    "Child::++ before 1",
-		       "Child::++ around 2 before",
-			 "Child::++ around 1 before",
-			   "Parent::++",
-			 "Child::++ around 1 after",
-		       "Child::++ around 2 after",
-		    "Child::++ after 1",
-		  "Child::++ after 2",
-		 );
+                    "Child::++ before 1",
+                       "Child::++ around 2 before",
+                         "Child::++ around 1 before",
+                           "Parent::++",
+                         "Child::++ around 1 after",
+                       "Child::++ around 2 after",
+                    "Child::++ after 1",
+                  "Child::++ after 2",
+                 );
 
   my $child = Child->new; $child++;
 
@@ -29,15 +29,15 @@ subtest 'coderef' => sub {
   @seen = ();
 
   my @expected = ("Child::-- before 2",
-		    "Child::-- before 1",
-		       "Child::-- around 2 before",
-			 "Child::-- around 1 before",
-			   "Parent::--",
-			 "Child::-- around 1 after",
-		       "Child::-- around 2 after",
-		    "Child::-- after 1",
-		  "Child::-- after 2",
-		 );
+                    "Child::-- before 1",
+                       "Child::-- around 2 before",
+                         "Child::-- around 1 before",
+                           "Parent::--",
+                         "Child::-- around 1 after",
+                       "Child::-- around 2 after",
+                    "Child::-- after 1",
+                  "Child::-- after 2",
+                 );
 
   my $child = Child->new; $child--;
 
@@ -50,7 +50,7 @@ BEGIN {
 
     use overload
         '++' => 'plus',
-	'--' => sub { push @seen, __PACKAGE__ . "::--" };
+        '--' => sub { push @seen, __PACKAGE__ . "::--" };
 
     sub new { bless {}, shift }
 
@@ -69,41 +69,41 @@ BEGIN {
 
         my $op = $_;
 
-	before $op => sub
-	{
-	    push @seen, __PACKAGE__ . "::$op before 1";
-	};
+        before $op => sub
+        {
+            push @seen, __PACKAGE__ . "::$op before 1";
+        };
 
-	before $op => sub
-	{
-	    push @seen, __PACKAGE__ . "::$op before 2";
-	};
+        before $op => sub
+        {
+            push @seen, __PACKAGE__ . "::$op before 2";
+        };
 
-	around $op => sub
-	{
-	    my $orig = shift;
-	    push @seen, __PACKAGE__ . "::$op around 1 before";
-	    $orig->();
-	    push @seen, __PACKAGE__ . "::$op around 1 after";
-	};
+        around $op => sub
+        {
+            my $orig = shift;
+            push @seen, __PACKAGE__ . "::$op around 1 before";
+            $orig->();
+            push @seen, __PACKAGE__ . "::$op around 1 after";
+        };
 
-	around $op => sub
-	{
-	    my $orig = shift;
-	    push @seen, __PACKAGE__ . "::$op around 2 before";
-	    $orig->();
-	    push @seen, __PACKAGE__ . "::$op around 2 after";
-	};
+        around $op => sub
+        {
+            my $orig = shift;
+            push @seen, __PACKAGE__ . "::$op around 2 before";
+            $orig->();
+            push @seen, __PACKAGE__ . "::$op around 2 after";
+        };
 
-	after $op => sub
-	{
-	    push @seen, __PACKAGE__ . "::$op after 1";
-	};
+        after $op => sub
+        {
+            push @seen, __PACKAGE__ . "::$op after 1";
+        };
 
-	after $op => sub
-	{
-	    push @seen, __PACKAGE__ . "::$op after 2";
-	};
+        after $op => sub
+        {
+            push @seen, __PACKAGE__ . "::$op after 2";
+        };
 
     }
 
