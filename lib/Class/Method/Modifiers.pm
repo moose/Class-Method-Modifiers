@@ -259,10 +259,9 @@ sub _overloaded_op_method {
     my $coderef;
     my $method_name;
 
+    my $isa = mro::get_linear_isa( $class );
 
-    my @isa = @{ mro::get_linear_isa( $class ) };
-
-    for my $pkg ( @isa ) {
+    for my $pkg ( @$isa ) {
 
         next
           unless defined( $coderef = *{ _getglob "${pkg}::${symbol}" }{CODE} );
