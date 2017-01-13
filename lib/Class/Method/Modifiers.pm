@@ -18,7 +18,14 @@ our %EXPORT_TAGS = (
 
 BEGIN {
   *_HAS_READONLY = $] >= 5.008 ? sub(){1} : sub(){0};
+  *_MRO_MODULE   = "$]" < 5.010 ? sub() { "MRO/Compat.pm" } : sub() { "mro.pm" };
+
 }
+
+# generate list of overloadable operators
+use overload ();
+my %OP = map {; $_ => 1 } map { split( ' ', $overload::ops{$_} ) } keys %overload::ops;
+
 
 our %MODIFIER_CACHE;
 
@@ -37,9 +44,15 @@ sub install_modifier {
     return _fresh($into, $code, @names) if $type eq 'fresh';
 
     for my $name (@names) {
-        my $hit = $into->can($name) or do {
+
+        my $orig = $name;
+
+        $name = _overloaded_op_method( $into, $name )
+          if $OP{$name};
+
+        my $hit = defined $name && $into->can($name) or do {
             require Carp;
-            Carp::confess("The method '$name' is not found in the inheritance hierarchy for class $into");
+            Carp::confess("The method '$orig' is not found in the inheritance hierarchy for class $into");
         };
 
         my $qualified = $into.'::'.$name;
@@ -217,6 +230,85 @@ sub _is_in_package {
     my $cv = B::svref_2object($coderef);
     return $cv->GV->STASH->NAME eq $package;
 }
+
+# operator overloads are stored in the symbol table as "($op"
+#
+# if the overload is a coderef
+#    *{$symbol}{CODE} = $coderef
+#
+# if the overload is a $method_name
+#    *{$symbol}{CODE}   = \&overload::nil (or ::_nil)
+#    *{$symbol}{SCALAR} = $method_name
+#
+# cribbed from Role::Tiny
+
+# stolen from Role::Tiny
+sub _getglob {
+    no strict 'refs';
+    \*{ $_[0] };
+}
+
+sub _overloaded_op_method {
+
+    require( _MRO_MODULE );
+
+    my ( $class, $op ) = @_;
+
+    my $symbol = '(' . $op;
+
+    my $coderef;
+    my $method_name;
+
+
+    my @isa = @{ mro::get_linear_isa( $class ) };
+
+    for my $pkg ( @isa ) {
+
+        next
+          unless defined( $coderef = *{ _getglob "${pkg}::${symbol}" }{CODE} );
+
+        # method name ?
+        if (
+            ( defined &overload::nil && $coderef == \&overload::nil )
+            || ( defined &overload::_nil
+                && $coderef == \&overload::_nil ) )
+        {
+
+            $method_name = ${ *{ _getglob "${pkg}::${symbol}" }{SCALAR} };
+
+            # weird but possible?
+            return unless defined $method_name;
+        }
+
+        last;
+    }
+
+    return if !defined $coderef;
+
+    # if $method_name is undefined, then $coderef is the real method
+    # to call. we can only modify named subroutines, so create a slot
+    # in the package's symbol table and rewire the overload.
+
+    if ( !defined $method_name ) {
+
+        $method_name = $class . $symbol;
+
+        # stolen from Sub::Quote::_sanitize_identifier
+
+        $method_name =~ s/([_\W])/sprintf('_%x', ord($1))/ge;
+
+        *{ _getglob "${class}::${method_name}" } = $coderef;
+
+        my $glob = _getglob "${class}::${symbol}";
+        *$glob = \$method_name;
+	no warnings 'redefine';
+        *$glob = \&overload::nil || \&overload::_nil;
+
+    }
+
+    return $method_name;
+}
+
 
 1;
 
