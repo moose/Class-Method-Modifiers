@@ -140,13 +140,13 @@ sub install_modifier {
                 $generated .= '$$wrapped->(@_);';
             }
 
-            $generated .= '}';
+            $generated .= '} 1;';
 
             no strict 'refs';
             no warnings 'redefine';
             no warnings 'closure';
-            eval $generated;
-        };
+            eval $generated or die $@;
+        }
     }
 }
 
