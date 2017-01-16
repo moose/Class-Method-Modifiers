@@ -103,8 +103,21 @@ sub install_modifier {
 
             my $attrs = _sub_attrs($cache->{wrapped});
 
+            my $fake_name;
+            my $need_fake_name = $name !~ /^[a-z_A-Z][0-9A-Z_a-z]*$/;
+            no strict 'refs';
+            local ${$into.'::'.$name} = 1
+                if $need_fake_name;
+            if ($need_fake_name) {
+                $fake_name = '_CMM_A000';
+                $fake_name++
+                  while exists ${$into.'::'}{$fake_name};
+                ${$into.'::'}{$fake_name} = ${$into.'::'}{$name};
+            }
+            use strict 'refs';
+
             my $generated = "package $into;\n";
-            $generated .= "sub $name $attrs {";
+            $generated .= "sub ".($fake_name||$name)." $attrs {";
 
             # before is easy, it doesn't affect the return value(s)
             if (@$before) {
@@ -146,6 +159,9 @@ sub install_modifier {
             no warnings 'redefine';
             no warnings 'closure';
             eval $generated or die $@;
+            if ($fake_name) {
+                delete ${$into.'::'}{$fake_name};
+            }
         }
     }
 }
