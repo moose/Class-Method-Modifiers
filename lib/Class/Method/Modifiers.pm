@@ -52,6 +52,7 @@ sub install_modifier {
         # this must be the first modifier we're installing
         if (!exists($cache->{"orig"})) {
             no strict 'refs';
+            no warnings 'once';
 
             # grab the original method (or undef if the method is inherited)
             $cache->{"orig"} = *{$qualified}{CODE};
