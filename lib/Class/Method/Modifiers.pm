@@ -8,6 +8,7 @@ package Class::Method::Modifiers;
 our $VERSION = '2.13';
 
 use base 'Exporter';
+use overload ();
 
 our @EXPORT = qw(before after around);
 our @EXPORT_OK = (@EXPORT, qw(fresh install_modifier));
@@ -37,10 +38,16 @@ sub install_modifier {
     return _fresh($into, $code, @names) if $type eq 'fresh';
 
     for my $name (@names) {
-        my $hit = $into->can($name) or do {
+        my $glob = overload::mycan($into, $name);
+        unless ($glob && defined &{*$glob}) (
             require Carp;
             Carp::confess("The method '$name' is not found in the inheritance hierarchy for class $into");
-        };
+        }
+        my $hit = \&{*$glob};
+        if ($hit == \&overload::nil) {
+            my $method = ${*$glob};
+            $hit = eval "package $into; sub { shift->$method(@_) }" or die $@;
+        }
 
         my $qualified = $into.'::'.$name;
         my $cache = $MODIFIER_CACHE{$into}{$name} ||= {
