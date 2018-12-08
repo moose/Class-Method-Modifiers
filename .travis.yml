@@ -12,7 +12,6 @@ perl:
   - "5.26"
   - "dev"
   - "blead"
-sudo: false
 addons:
   apt:
     packages:
