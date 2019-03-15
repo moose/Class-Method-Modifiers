@@ -270,7 +270,7 @@ C<Class::Method::Modifiers> provides three modifiers: C<before>, C<around>, and
 C<after>. C<before> and C<after> are run just before and after the method they
 modify, but can not really affect that original method. C<around> is run in
 place of the original method, with a hook to easily call that original method.
-See the C<MODIFIERS> section for more details on how the particular modifiers
+See the L</MODIFIERS> section for more details on how the particular modifiers
 work.
 
 One clear benefit of using C<Class::Method::Modifiers> is that you can define
@@ -288,7 +288,7 @@ In short, C<Class::Method::Modifiers> solves the problem of making sure you
 call C<< $self->SUPER::foo(@_) >>, and provides a cleaner interface for it.
 
 As of version 1.00, C<Class::Method::Modifiers> is faster in some cases than
-L<Moose>. See C<benchmark/method_modifiers.pl> in the L<Moose> distribution.
+L<Moose>. See F<benchmark/method_modifiers.pl> in the L<Moose> distribution.
 
 C<Class::Method::Modifiers> also provides an additional "modifier" type,
 C<fresh>; see below.
@@ -463,7 +463,7 @@ become more correct. And, of course, faster. :)
 * L<Moose>
 * L<Class::Trigger>
 * L<Class::MOP::Method::Wrapped>
-* L<MRO::Compat>,
+* L<MRO::Compat>
 * L<CLOS|https://en.wikipedia.org/wiki/Common_Lisp_Object_System>
 
 =head1 ACKNOWLEDGEMENTS
