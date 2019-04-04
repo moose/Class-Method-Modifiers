@@ -208,6 +208,8 @@ sub _sub_attrs {
     my ($coderef) = @_;
     local *_sub = $coderef;
     local $@;
+    # this assignment will fail to compile if it isn't an lvalue sub.  we
+    # never want to actually call the sub though, so we return early.
     (eval 'return 1; &_sub = 1') ? ':lvalue' : '';
 }
 
