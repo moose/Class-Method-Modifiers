@@ -208,7 +208,7 @@ sub _sub_attrs {
     my ($coderef) = @_;
     local *_sub = $coderef;
     local $@;
-    (eval 'sub { _sub = 1 }') ? ':lvalue' : '';
+    (eval 'sub { &_sub = 1 }') ? ':lvalue' : '';
 }
 
 sub _is_in_package {
