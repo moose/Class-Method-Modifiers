@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use Test::More 0.88;
-use Test::Warnings ($ENV{AUTHOR_TESTING} ? () : ':no_end_test'), 'warning';
+use Test::Warnings ($ENV{AUTHOR_TESTING} ? () : ':no_end_test'), 'warnings';
 use Test::Fatal;
 
 use Class::Method::Modifiers;
@@ -39,7 +39,7 @@ use Class::Method::Modifiers;
     sub bog ($) { scalar @_ }
 
     my $around;
-    my $warn = warning {
+    my ($warn) = warnings {
         around bog => sub ($$) {
             my $orig = shift;
             $around = @_;
@@ -53,6 +53,22 @@ use Class::Method::Modifiers;
         'around modifier applied';
     like $warn, qr/Prototype mismatch/,
         'changing prototype throws warning';
+    like $warn, qr/\Q${\__FILE__}\E/,
+        'warning is reported from correct location';
+}
+
+{
+    sub brog ($) { scalar @_ }
+    no warnings;
+    my @warn = warnings {
+        around brog => sub ($$) {
+            my $orig = shift;
+            $orig->(@_);
+        };
+    };
+
+    is 0+@warn, 0,
+        'warnings controllable via warning pragma';
 }
 
 done_testing;
