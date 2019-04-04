@@ -34,18 +34,21 @@ use Class::Method::Modifiers;
 }
 
 {
-    sub bog ($) { scalar @_ }
-
     my $around;
 
+    sub bog ($) { scalar @_ }
+    my $wrap_bog = sub ($$) {
+        my $orig = shift;
+        $around = @_;
+        $orig->(@_);
+    };
+
+    my $warn_line;
     my @warn;
     {
         local $SIG{__WARN__} = sub { push @warn, @_ };
-        around bog => sub ($$) {
-            my $orig = shift;
-            $around = @_;
-            $orig->(@_);
-        };
+        $warn_line = __LINE__ + 1;
+        around bog => $wrap_bog;
     }
 
     is eval q{ bog( @{[5, 6]}, @{[10, 11]} ) }, 2,
@@ -55,6 +58,26 @@ use Class::Method::Modifiers;
     my $warn = join '', @warn;
     like $warn, qr/Prototype mismatch/,
         'changing prototype throws warning';
+    like $warn, qr/\Q${\__FILE__}\E line $warn_line\b/,
+        'warning is reported from correct location';
+}
+
+{
+    sub brog ($) { scalar @_ }
+    my $wrap_brog = sub ($$) {
+        my $orig = shift;
+        $orig->(@_);
+    };
+
+    my @warn;
+    {
+        local $SIG{__WARN__} = sub { push @warn, @_ };
+        no warnings;
+        around brog => $wrap_brog;
+    }
+
+    is 0+@warn, 0,
+        'warnings controllable via warning pragma';
 }
 
 done_testing;
