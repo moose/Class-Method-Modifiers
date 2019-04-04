@@ -78,6 +78,10 @@ sub install_modifier {
             unshift @{ $cache->{$type} }, $code;
         }
 
+        require Carp;
+        my $loc = Carp::short_error_loc();
+        my ($file, $line, $warnmask) = (caller($loc))[1,2,9];
+
         # wrap the method with another layer of around. much simpler than
         # the Moose equivalent. :)
         if ($type eq 'around') {
@@ -103,8 +107,13 @@ sub install_modifier {
 
             my $sig = _sub_sig($cache->{wrapped});
 
-            my $generated = "package $into;\n";
-            $generated .= "sub $name $sig {";
+            my $generated
+              = "BEGIN { \${^WARNING_BITS} = \$warnmask }\n"
+              . "no warnings 'redefine';\n"
+              . "no warnings 'closure';\n"
+              . "package $into;\n"
+              . "#line $line \"$file\"\n"
+              . "sub $name $sig {";
 
             # before is easy, it doesn't affect the return value(s)
             if (@$before) {
@@ -143,8 +152,6 @@ sub install_modifier {
             $generated .= '}';
 
             no strict 'refs';
-            no warnings 'redefine';
-            no warnings 'closure';
             eval $generated;
         };
     }
