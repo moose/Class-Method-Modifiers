@@ -78,15 +78,19 @@ sub install_modifier {
             unshift @{ $cache->{$type} }, $code;
         }
 
+        require Carp;
+        my $loc = Carp::short_error_loc();
+        my ($file, $line, $warnmask) = (caller($loc))[1,2,9];
+
         # wrap the method with another layer of around. much simpler than
         # the Moose equivalent. :)
         if ($type eq 'around') {
             my $method = $cache->{wrapped};
-            my $attrs = _sub_attrs($code);
+            my $sig = _sub_sig($code);
             # a bare "sub :lvalue {...}" will be parsed as a label and an
             # indirect method call. force it to be treated as an expression
             # using +
-            $cache->{wrapped} = eval "package $into; +sub $attrs { \$code->(\$method, \@_); };";
+            $cache->{wrapped} = eval "package $into; +sub $sig { \$code->(\$method, \@_); };";
         }
 
         # install our new method which dispatches the modifiers, but only
@@ -101,10 +105,15 @@ sub install_modifier {
             # to take a reference to it. better a deref than a hash lookup
             my $wrapped = \$cache->{"wrapped"};
 
-            my $attrs = _sub_attrs($cache->{wrapped});
+            my $sig = _sub_sig($cache->{wrapped});
 
-            my $generated = "package $into;\n";
-            $generated .= "sub $name $attrs {";
+            my $generated
+              = "BEGIN { \${^WARNING_BITS} = \$warnmask }\n"
+              . "no warnings 'redefine';\n"
+              . "no warnings 'closure';\n"
+              . "package $into;\n"
+              . "#line $line \"$file\"\n"
+              . "sub $name $sig {";
 
             # before is easy, it doesn't affect the return value(s)
             if (@$before) {
@@ -143,8 +152,6 @@ sub install_modifier {
             $generated .= '}';
 
             no strict 'refs';
-            no warnings 'redefine';
-            no warnings 'closure';
             eval $generated;
         };
     }
@@ -198,17 +205,27 @@ sub _fresh {
         }
         else {
             no warnings 'closure'; # for 5.8.x
-            my $attrs = _sub_attrs($code);
-            eval "package $into; sub $name $attrs { \$code->(\@_) }";
+            my $sig = _sub_sig($code);
+            eval "package $into; sub $name $sig { \$code->(\@_) }";
         }
     }
 }
 
-sub _sub_attrs {
+sub _sub_sig {
     my ($coderef) = @_;
-    local *_sub = $coderef;
-    local $@;
-    (eval 'return 1; &_sub = 1') ? ':lvalue' : '';
+    my @sig;
+    if (defined(my $proto = prototype($coderef))) {
+        push @sig, "($proto)";
+    }
+    if (do {
+        local *_sub = $coderef;
+        local $@;
+        local $SIG{__DIE__};
+        eval 'return 1; &_sub = 1';
+    }) {
+        push @sig, ':lvalue';
+    }
+    join ' ', @sig;
 }
 
 sub _is_in_package {
