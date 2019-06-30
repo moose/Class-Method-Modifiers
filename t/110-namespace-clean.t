@@ -6,12 +6,11 @@ use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 
 use Test::Needs 'Moose';
 
-# code for this sub is taken directly from
-# Test::CleanNamespaces::build_namespaces_clean
+# see also Test::CleanNamespaces::_remaining_imports
 sub imports
 {
     my $ns = shift;
-    my $meta = Moose::Util::find_meta($ns) || Moose::Meta::Class->initialize($ns);
+    my $meta = Class::MOP::class_of($ns) || Moose::Meta::Class->initialize($ns);
     my %methods = map +($_ => 1), $meta->get_method_list;
     my @symbols = keys %{ $meta->get_all_package_symbols('CODE') || {} };
     my @imports = grep !$methods{$_}, @symbols;
