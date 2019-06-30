@@ -12,9 +12,9 @@ sub imports
 {
     my $ns = shift;
     my $meta = Moose::Util::find_meta($ns) || Moose::Meta::Class->initialize($ns);
-    my %methods = map { ($_ => 1) } $meta->get_method_list;
+    my %methods = map +($_ => 1), $meta->get_method_list;
     my @symbols = keys %{ $meta->get_all_package_symbols('CODE') || {} };
-    my @imports = grep { !$methods{$_} } @symbols;
+    my @imports = grep !$methods{$_}, @symbols;
 }
 
 {
@@ -25,7 +25,7 @@ sub imports
 }
 
 ok(
-    !(grep { $_ eq 'foo' || $_ eq 'bar' || $_ eq 'baz' } imports('Foo')),
+    !(grep $_ eq 'foo' || $_ eq 'bar' || $_ eq 'baz', imports('Foo')),
     "original subs are not in Foo's list of imports",
 )
     or note('Foo has imports: ' . join(', ', imports('Foo')));
@@ -48,7 +48,7 @@ eval {
 };
 
 ok(
-    !(grep { $_ eq 'foo' || $_ eq 'bar' || $_ eq 'baz' } imports('Foo')),
+    !(grep $_ eq 'foo' || $_ eq 'bar' || $_ eq 'baz', imports('Foo')),
     "modified subs are not in Foo's list of imports",
 )
     or note('Foo has imports: ' . join(', ', imports('Foo')));
