@@ -1,6 +1,7 @@
 Revision history for Class-Method-Modifiers
 
 {{ $NEXT }}
+        - bypass prototypes when testing for lvalue attribute
 
 2.12      2016-03-04 22:12:15Z
         - minor documentation tweaks
