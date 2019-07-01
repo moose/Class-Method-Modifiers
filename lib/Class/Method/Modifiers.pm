@@ -229,7 +229,7 @@ __END__
 =head1 SYNOPSIS
 
     package Child;
-    use parent 'Parent';
+    use parent 'MyParent';
     use Class::Method::Modifiers;
 
     sub new_method { }

@@ -2,6 +2,7 @@ Revision history for Class-Method-Modifiers
 
 {{ $NEXT }}
         - bypass prototypes when testing for lvalue attribute
+        - fixed a class name in tests to avoid conflicting with a core module
 
 2.12      2016-03-04 22:12:15Z
         - minor documentation tweaks
