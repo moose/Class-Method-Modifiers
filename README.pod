@@ -8,7 +8,7 @@ Class::Method::Modifiers - Provides Moose-like method modifiers
 
 =head1 VERSION
 
-version 2.13
+version 2.14
 
 =head1 SYNOPSIS
 
@@ -289,7 +289,7 @@ Shawn M Moore <sartak@gmail.com>
 
 =head1 CONTRIBUTORS
 
-=for stopwords Karen Etheridge Shawn M Moore Graham Knop Aaron Crane Peter Rabbitson Justin Hunter David Steinbrunner gfx mannih
+=for stopwords Karen Etheridge Shawn M Moore Graham Knop Aaron Crane Peter Rabbitson David Steinbrunner gfx Justin Hunter mannih
 
 =over 4
 
@@ -315,15 +315,15 @@ Peter Rabbitson <ribasushi@cpan.org>
 
 =item *
 
-Justin Hunter <justin.d.hunter@gmail.com>
-
-=item *
-
 David Steinbrunner <dsteinbrunner@pobox.com>
 
 =item *
 
 gfx <gfuji@cpan.org>
+
+=item *
+
+Justin Hunter <justin.d.hunter@gmail.com>
 
 =item *
 

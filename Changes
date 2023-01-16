@@ -1,6 +1,6 @@
 Revision history for Class-Method-Modifiers
 
-{{ $NEXT }}
+2.14      2023-01-16 21:26:04Z
         - remove Test::Fatal and Test::Needs from test prereqs (PRs #7, #8,
           Graham Knop)
 
