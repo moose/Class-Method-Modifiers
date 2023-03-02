@@ -466,7 +466,7 @@ become more correct. And, of course, faster. :)
 * L<MRO::Compat>
 * L<CLOS|https://en.wikipedia.org/wiki/Common_Lisp_Object_System>
 
-=head1 ACKNOWLEDGEMENTS
+=head1 ACKNOWLEDGMENTS
 
 =for stopwords Stevan
 
