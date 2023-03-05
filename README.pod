@@ -8,7 +8,7 @@ Class::Method::Modifiers - Provides Moose-like method modifiers
 
 =head1 VERSION
 
-version 2.14
+version 2.15
 
 =head1 SYNOPSIS
 
@@ -269,7 +269,7 @@ L<CLOS|https://en.wikipedia.org/wiki/Common_Lisp_Object_System>
 
 =back
 
-=head1 ACKNOWLEDGEMENTS
+=head1 ACKNOWLEDGMENTS
 
 =for stopwords Stevan
 
@@ -289,7 +289,7 @@ Shawn M Moore <sartak@gmail.com>
 
 =head1 CONTRIBUTORS
 
-=for stopwords Karen Etheridge Shawn M Moore Graham Knop Aaron Crane Peter Rabbitson David Steinbrunner gfx Justin Hunter mannih
+=for stopwords Karen Etheridge Shawn M Moore Graham Knop Aaron Crane Peter Rabbitson David Steinbrunner gfx Justin Hunter mannih Yves Orton
 
 =over 4
 
@@ -328,6 +328,10 @@ Justin Hunter <justin.d.hunter@gmail.com>
 =item *
 
 mannih <github@lxxi.org>
+
+=item *
+
+Yves Orton <demerphq@gmail.com>
 
 =back
 
