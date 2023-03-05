@@ -1,5 +1,7 @@
 Revision history for Class-Method-Modifiers
 
+{{ $NEXT }}
+
 2.15      2023-03-05 23:42:48Z
         - localize $SIG{__DIE__} before calling eval (closes RT#146848; Yves
           Orton)

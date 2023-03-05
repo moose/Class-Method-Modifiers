@@ -5,7 +5,7 @@ package Class::Method::Modifiers;
 # KEYWORDS: method wrap modification patch
 # vim: set ts=8 sts=4 sw=4 tw=115 et :
 
-our $VERSION = '2.15';
+our $VERSION = '2.16';
 
 use base 'Exporter';
 
