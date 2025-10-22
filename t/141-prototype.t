@@ -37,7 +37,7 @@ use Class::Method::Modifiers;
 
 {
     sub bog ($) { scalar @_ }
-
+    my $min_lineno = __LINE__;
     my $around;
     my ($warn) = warnings {
         around bog => sub ($$) {
@@ -46,7 +46,7 @@ use Class::Method::Modifiers;
             $orig->(@_);
         };
     };
-
+    my $max_lineno = __LINE__;
     is eval q{ bog( @{[5, 6]}, @{[10, 11]} ) }, 2,
         'around wrapped lvalue sub takes modifier prototype';
     is $around, 2,
@@ -55,6 +55,10 @@ use Class::Method::Modifiers;
         'changing prototype throws warning';
     like $warn, qr/\Q${\__FILE__}\E/,
         'warning is reported from correct location';
+
+    my ($lineno) = ($warn =~ qr/\Q${\__FILE__}\E line ([0-9]+)/);
+    is !!($min_lineno < $lineno && $lineno < $max_lineno), 1,
+        'line no is within range';
 }
 
 {
@@ -69,6 +73,23 @@ use Class::Method::Modifiers;
 
     is 0+@warn, 0,
         'warnings controllable via warning pragma';
+}
+
+{
+    require List::Util;
+    List::Util->import('sum');
+    my $around;
+    my @warn = warnings {
+        around sum => sub :prototype(@) {
+            my $orig = shift;
+            $around = @_;
+            return 2 * $orig->(@_);
+        };
+    };
+    is eval q{sum(11, 1, 4, 5, 9)}, 60,
+        'result from around xs function';
+    is $around, 5, 'prototype @ wrapped';
+    is 0+@warn, 0, 'no warnings';
 }
 
 done_testing;
