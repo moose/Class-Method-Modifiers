@@ -80,5 +80,29 @@ use Class::Method::Modifiers;
         'warnings controllable via warning pragma';
 }
 
+{
+    my $around;
+
+    require List::Util;
+    List::Util->import('sum');
+    my $wrap_sum = sub :prototype(@) {
+        my $orig = shift;
+        $around = @_;
+        return 2 * $orig->(@_);
+    };
+
+
+    my @warn;
+    {
+        local $SIG{__WARN__} = sub { push @warn, @_ };
+        around sum => $wrap_sum;
+    }
+
+    is eval q{sum(11, 1, 4, 5, 9)}, 60,
+        'result from around xs function';
+    is $around, 5, 'prototype @ wrapped';
+    is 0+@warn, 0, 'no warnings';
+}
+
 done_testing;
 # vim: set ts=8 sts=4 sw=4 tw=115 et :
